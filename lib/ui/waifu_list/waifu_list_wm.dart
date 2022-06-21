@@ -24,6 +24,12 @@ class WaifuListWM extends WidgetModel<WaifuListScreen, WaifuListModel>
   @override
   ListenableState<EntityState<WaifuImageList?>> get images => _images;
 
+  @override
+  WaifuType get type => model.type.value;
+
+  @override
+  String get category => model.category.value;
+
   WaifuListWM(
     WaifuListModel model,
     this._contextHelper,
@@ -37,13 +43,15 @@ class WaifuListWM extends WidgetModel<WaifuListScreen, WaifuListModel>
   }
 
   @override
-  void onChangeCategory(String category) {
-    model.onChangeCategory(category);
+  void onChangeCategory(String newCategory) {
+    model.onChangeCategory(newCategory);
+    _fetchWaifuList();
   }
 
   @override
-  void onChangeType(WaifuType type) {
-    model.onChangeType(type);
+  void onChangeType(WaifuType newType) {
+    model.onChangeType(newType);
+    _fetchWaifuList();
   }
 
   Future<void> _fetchWaifuList() async {
@@ -68,6 +76,9 @@ class WaifuListWM extends WidgetModel<WaifuListScreen, WaifuListModel>
 abstract class IWaifuListWM extends IWidgetModel {
   ListenableState<EntityState<WaifuImageList?>> get images;
   Completer<void>? get refreshCompleter;
+
+  WaifuType get type;
+  String get category;
 
   void onChangeType(WaifuType type);
   void onChangeCategory(String category);

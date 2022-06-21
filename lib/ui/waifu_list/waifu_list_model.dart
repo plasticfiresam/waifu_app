@@ -10,32 +10,27 @@ class WaifuListModel extends ElementaryModel {
   final ValueNotifier<List<WaifuImage>> images =
       ValueNotifier<List<WaifuImage>>([]);
 
-  final ValueNotifier<WaifuType> _type =
-      ValueNotifier<WaifuType>(WaifuType.sfw);
+  final ValueNotifier<WaifuType> type = ValueNotifier<WaifuType>(WaifuType.sfw);
 
-  final ValueNotifier<String> _category =
+  final ValueNotifier<String> category =
       ValueNotifier<String>(waifuCategories[WaifuType.sfw]!.first);
 
   final WaifuService _waifuService;
 
   WaifuListModel(this._waifuService);
 
-  void onChangeType(WaifuType type) {
-    _type.value = type;
-
-    fetchWaifuImages();
+  void onChangeType(WaifuType newType) {
+    type.value = newType;
   }
 
-  void onChangeCategory(String category) {
-    _category.value = category;
-
-    fetchWaifuImages();
+  void onChangeCategory(String newCategory) {
+    category.value = newCategory;
   }
 
   Future<WaifuImageList> fetchWaifuImages() async {
     try {
       final imageList =
-          await _waifuService.getWaifuImages(_type.value, _category.value);
+          await _waifuService.getWaifuImages(type.value, category.value);
 
       return imageList;
     } catch (e) {
