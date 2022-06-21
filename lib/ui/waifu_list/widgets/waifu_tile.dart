@@ -16,27 +16,24 @@ class WaifuTile extends StatelessWidget {
       child: LimitedBox(
         maxWidth: (MediaQuery.of(context).size.width / 2) - 8,
         maxHeight: 300,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(24),
-            child: DecoratedBox(
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(1, 13, 9, 8),
-              ),
-              child: CachedNetworkImage(
-                fit: BoxFit.cover,
-                imageUrl: image.url,
-                placeholder: (context, _) {
-                  return const SizedBox(
-                    width: 55,
-                    height: 55,
-                    child: Center(
-                      child: CupertinoActivityIndicator(),
-                    ),
-                  );
-                },
-              ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: DecoratedBox(
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(1, 13, 9, 8),
+            ),
+            child: CachedNetworkImage(
+              fit: BoxFit.cover,
+              imageUrl: image.url,
+              placeholder: (context, _) {
+                return const SizedBox(
+                  width: 55,
+                  height: 55,
+                  child: Center(
+                    child: CupertinoActivityIndicator(),
+                  ),
+                );
+              },
             ),
           ),
         ),
