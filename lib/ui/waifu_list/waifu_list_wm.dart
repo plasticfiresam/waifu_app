@@ -3,15 +3,18 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:elementary/elementary.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:waifu/service/context_helper.dart';
 import 'package:waifu/service/model/waifu_image_list.dart';
 import 'package:waifu/service/model/waifu_type.dart';
 import 'package:waifu/service/waifu_service.dart';
-import 'package:waifu/ui/waifu_list_screen/waifu_list_model.dart';
-import 'package:waifu/ui/waifu_list_screen/waifu_list_screen.dart';
+import 'package:waifu/ui/waifu_list/waifu_list_model.dart';
+import 'package:waifu/ui/waifu_list/waifu_list_screen.dart';
 
 class WaifuListWM extends WidgetModel<WaifuListScreen, WaifuListModel>
     implements IWaifuListWM {
   final EntityStateNotifier<WaifuImageList?> _images = EntityStateNotifier();
+
+  final ContextHelper _contextHelper;
 
   Completer<void>? _refreshCompleter;
 
@@ -21,7 +24,10 @@ class WaifuListWM extends WidgetModel<WaifuListScreen, WaifuListModel>
   @override
   ListenableState<EntityState<WaifuImageList?>> get images => _images;
 
-  WaifuListWM(WaifuListModel model) : super(model);
+  WaifuListWM(
+    WaifuListModel model,
+    this._contextHelper,
+  ) : super(model);
 
   @override
   void initWidgetModel() {
@@ -71,4 +77,5 @@ WaifuListWM createWaifuListWM(BuildContext _) => WaifuListWM(
       WaifuListModel(
         WaifuService(),
       ),
+      ContextHelper(),
     );

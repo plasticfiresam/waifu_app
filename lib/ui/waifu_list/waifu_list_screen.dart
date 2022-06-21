@@ -1,8 +1,8 @@
 import 'package:elementary/elementary.dart';
 import 'package:flutter/material.dart';
 import 'package:waifu/service/model/waifu_image_list.dart';
-import 'package:waifu/ui/waifu_list_screen/waifu_list_wm.dart';
-import 'package:waifu/ui/waifu_list_screen/widgets/waifu_list.dart';
+import 'package:waifu/ui/waifu_list/waifu_list_wm.dart';
+import 'package:waifu/ui/waifu_list/widgets/waifu_list.dart';
 
 class WaifuListScreen extends ElementaryWidget<WaifuListWM> {
   const WaifuListScreen({

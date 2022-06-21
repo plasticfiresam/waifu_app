@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:waifu/service/model/waifu_image.dart';
 import 'package:waifu/service/model/waifu_image_list.dart';
-import 'package:waifu/ui/waifu_list_screen/widgets/waifu_tile.dart';
+import 'package:waifu/ui/waifu_list/widgets/waifu_tile.dart';
 
 class WaifuList extends StatelessWidget {
   final WaifuImageList imageList;
