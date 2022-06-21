@@ -13,7 +13,7 @@ abstract class WaifuClient {
     String? baseUrl,
   }) = _WaifuClient;
 
-  @GET('/many/{type}/{category}')
+  @POST('/many/{type}/{category}')
   Future<WaifuImageList> getWaifuImages({
     @Path() required WaifuType type,
     @Path() required String category,

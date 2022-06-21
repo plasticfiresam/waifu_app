@@ -8,7 +8,20 @@ class WaifuApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Waifu App',
-      theme: ThemeData(),
+      theme: ThemeData(
+        colorScheme: const ColorScheme.light(
+          primary: Colors.black,
+        ),
+        appBarTheme: const AppBarTheme(
+          color: Colors.white,
+          elevation: 0,
+          foregroundColor: Colors.black,
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+        ),
+      ),
       home: const WaifuListScreen(),
     );
   }

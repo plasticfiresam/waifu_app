@@ -8,7 +8,5 @@ part of 'waifu_image_list.dart';
 
 WaifuImageList _$WaifuImageListFromJson(Map<String, dynamic> json) =>
     WaifuImageList(
-      (json['images'] as List<dynamic>)
-          .map((e) => WaifuImage.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      (json['files'] as List<dynamic>).map((e) => e as String).toList(),
     );
