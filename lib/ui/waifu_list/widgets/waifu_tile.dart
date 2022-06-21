@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:waifu/service/model/waifu_image.dart';
 
 class WaifuTile extends StatelessWidget {
   final WaifuImage image;
+
   const WaifuTile({
     Key? key,
     required this.image,
@@ -14,16 +16,18 @@ class WaifuTile extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 55),
       child: LimitedBox(
-        maxWidth: (MediaQuery.of(context).size.width / 2) - 8,
         maxHeight: 300,
-        child: ClipRRect(
+        child: Material(
+          type: MaterialType.card,
           borderRadius: BorderRadius.circular(24),
+          clipBehavior: Clip.antiAlias,
           child: DecoratedBox(
             decoration: const BoxDecoration(
               color: Color.fromARGB(1, 13, 9, 8),
             ),
             child: CachedNetworkImage(
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
+              fadeInDuration: const Duration(milliseconds: 300),
               imageUrl: image.url,
               placeholder: (context, _) {
                 return const SizedBox(

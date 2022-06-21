@@ -27,11 +27,11 @@ class WaifuList extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           slivers: [
             SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               sliver: SliverToBoxAdapter(
                 child: MasonryGrid(
-                  crossAxisSpacing: 12.0,
-                  mainAxisSpacing: 12.0,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
                   column: constraints.maxHeight > constraints.maxWidth ? 2 : 3,
                   children: [
                     for (var image in imageList.images)
