@@ -15,7 +15,7 @@ class WaifuListScreen extends ElementaryWidget<WaifuListWidgetModel> {
   }) : super(wmFactory, key: key);
 
   @override
-  Widget build(WaifuListWidgetModel wm) {
+  Widget build(IWaifuListWidgetModel wm) {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {

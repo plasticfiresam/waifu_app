@@ -23,15 +23,17 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
 
   final EntityStateNotifier<bool> _categoriesExpanded =
       EntityStateNotifier.value(false);
-
+  @override
   ListenableState<EntityState<bool>> get categoriesExpanded =>
       _categoriesExpanded;
 
   final ScrollController _scrollController = ScrollController();
+  @override
   ScrollController get scrollController => _scrollController;
 
   final StickyHeaderController _stickyHeaderController =
       StickyHeaderController();
+  @override
   StickyHeaderController get stickyHeaderController => _stickyHeaderController;
 
   final NavigationHelper _navigationHelper;
@@ -91,6 +93,7 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
     }
   }
 
+  @override
   void refreshList() async {
     if (_refreshCompleter?.isCompleted ?? true) {
       _refreshCompleter = Completer<void>();
@@ -136,11 +139,18 @@ abstract class IWaifuListWidgetModel extends IWidgetModel {
   WaifuType get type;
   String get category;
 
+  ScrollController get scrollController;
+  StickyHeaderController get stickyHeaderController;
+
+  ListenableState<EntityState<bool>> get categoriesExpanded;
+
   void onChangeType(WaifuType type);
   void onChangeCategory(String category);
   void onToggleCategoriesPanel();
   void onOpenRandom();
   void openDetails(WaifuImage waifu);
+
+  void refreshList() {}
 }
 
 WaifuListWidgetModel createWaifuListWM(BuildContext _) => WaifuListWidgetModel(
