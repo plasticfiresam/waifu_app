@@ -33,15 +33,14 @@ class WaifuListModel extends ElementaryModel {
     _appModel.currentImage = waifu;
   }
 
-  Future<WaifuImageList> fetchWaifuImages() async {
+  Future<void> fetchWaifuImages() async {
     try {
       final imageList =
           await _waifuService.getWaifuImages(type.value, category.value);
 
-      return imageList;
+      images.value = List.from(imageList.images.map((e) => WaifuImage(e)));
     } catch (e) {
       handleError(e);
-      rethrow;
     }
   }
 }

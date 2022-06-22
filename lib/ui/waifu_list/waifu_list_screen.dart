@@ -2,6 +2,7 @@ import 'package:elementary/elementary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:waifu/service/constants/waifu_categories.dart';
+import 'package:waifu/service/model/waifu_image.dart';
 import 'package:waifu/service/model/waifu_image_list.dart';
 import 'package:waifu/service/model/waifu_type.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_wm.dart';
@@ -57,7 +58,7 @@ class WaifuListScreen extends ElementaryWidget<WaifuListWidgetModel> {
                 sliver: SliverPadding(
                   padding: const EdgeInsets.all(16),
                   sliver: SliverToBoxAdapter(
-                    child: EntityStateNotifierBuilder<WaifuImageList?>(
+                    child: EntityStateNotifierBuilder<List<WaifuImage>?>(
                       listenableEntityState: wm.images,
                       errorBuilder: (_, __, ___) {
                         return const Center(

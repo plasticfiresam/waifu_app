@@ -18,7 +18,7 @@ import 'package:waifu/ui/waifu_list/waifu_list_model.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_screen.dart';
 
 abstract class IWaifuListWidgetModel extends IWidgetModel {
-  ListenableState<EntityState<WaifuImageList?>> get images;
+  ListenableState<EntityState<List<WaifuImage>?>> get images;
   Completer<void>? get refreshCompleter;
 
   ValueNotifier<WaifuType> get type;
@@ -49,7 +49,7 @@ WaifuListWidgetModel createWaifuListWM(BuildContext _) => WaifuListWidgetModel(
 
 class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
     implements IWaifuListWidgetModel {
-  final EntityStateNotifier<WaifuImageList?> _images = EntityStateNotifier();
+  final EntityStateNotifier<List<WaifuImage>?> _images = EntityStateNotifier();
 
   final EntityStateNotifier<bool> _categoriesExpanded =
       EntityStateNotifier.value(false);
@@ -74,7 +74,7 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
   Completer<void>? get refreshCompleter => _refreshCompleter;
 
   @override
-  ListenableState<EntityState<WaifuImageList?>> get images => _images;
+  ListenableState<EntityState<List<WaifuImage>?>> get images => _images;
 
   @override
   ValueNotifier<WaifuType> get type => model.type;
@@ -114,11 +114,13 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
 
   Future<void> _fetchWaifuList({bool savePrevious = true}) async {
     _images.accept(EntityState(
-        data: savePrevious ? _images.value?.data : null, isLoading: true));
+      data: savePrevious ? _images.value?.data : null,
+      isLoading: true,
+    ));
 
-    final images = await model.fetchWaifuImages();
+    await model.fetchWaifuImages();
 
-    _images.content(images);
+    _images.content(model.images.value);
   }
 
   @override
