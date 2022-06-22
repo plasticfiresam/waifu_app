@@ -26,13 +26,12 @@ RandomWaifuWidgetModel defaultRandomWaifuWidgetModelFactory(
   );
 }
 
-// TODO: cover with documentation
-/// Default widget model for RandomWaifuWidget
 class RandomWaifuWidgetModel
     extends WidgetModel<RandomWaifuScreen, RandomWaifuModel>
     implements IRandomWaifuWidgetModel {
   final EntityStateNotifier<WaifuImage> _currentImage =
       EntityStateNotifier<WaifuImage>();
+
   final ContextHelper _contextHelper;
 
   RandomWaifuWidgetModel(
@@ -52,12 +51,12 @@ class RandomWaifuWidgetModel
 
   Future<void> _fetchRandowWaifu() async {
     try {
-      _currentImage.loading();
+      _currentImage.loading(_currentImage.value?.data);
 
       final res = await model.loadRandomWaifu();
       _currentImage.content(res);
     } on DioError catch (e) {
-      _currentImage.error(e);
+      _currentImage.error(e, _currentImage.value?.data);
     }
   }
 

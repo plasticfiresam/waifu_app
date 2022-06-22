@@ -1,12 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:elementary/elementary.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:waifu/service/model/waifu_image.dart';
+import 'package:waifu/ui/random_waifu/widgets/waifu_viewer.dart';
 import 'random_waifu_wm.dart';
 
-// TODO: cover with documentation
-/// Main widget for RandomWaifu module
 class RandomWaifuScreen extends ElementaryWidget<IRandomWaifuWidgetModel> {
   const RandomWaifuScreen({
     Key? key,
@@ -40,20 +37,17 @@ class RandomWaifuScreen extends ElementaryWidget<IRandomWaifuWidgetModel> {
         loadingBuilder: (_, __) => const Center(
           child: CircularProgressIndicator(),
         ),
+        errorBuilder: (context, error, data) {
+          if (data != null) {
+            return WaifuViewer(image: data);
+          }
+          return const Center(
+            child: Text('Ошибка загрузки данных'),
+          );
+        },
         builder: (context, data) {
           if (data != null) {
-            return Stack(
-              children: [
-                Positioned.fill(
-                  child: InteractiveViewer(
-                    child: CachedNetworkImage(
-                      imageUrl: data.url,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-              ],
-            );
+            return WaifuViewer(image: data);
           }
           return const SizedBox();
         },

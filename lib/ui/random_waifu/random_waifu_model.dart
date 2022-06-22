@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:elementary/elementary.dart';
 import 'package:waifu/service/model/waifu_image.dart';
