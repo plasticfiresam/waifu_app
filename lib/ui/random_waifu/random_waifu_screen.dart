@@ -23,7 +23,7 @@ class RandomWaifuScreen extends ElementaryWidget<IRandomWaifuWidgetModel> {
         ],
       ),
       floatingActionButton: EntityStateNotifierBuilder<WaifuImage>(
-        listenableEntityState: wm.image,
+        listenableEntityState: wm.imageState,
         builder: (_, data) {
           final loaded = data != null;
           return FloatingActionButton(
@@ -33,7 +33,7 @@ class RandomWaifuScreen extends ElementaryWidget<IRandomWaifuWidgetModel> {
         },
       ),
       body: EntityStateNotifierBuilder<WaifuImage>(
-        listenableEntityState: wm.image,
+        listenableEntityState: wm.imageState,
         loadingBuilder: (_, __) => const Center(
           child: CircularProgressIndicator(),
         ),

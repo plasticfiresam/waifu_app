@@ -4,7 +4,7 @@ import 'package:waifu/app_model.dart';
 import 'package:waifu/main.dart';
 import 'package:waifu/service/model/waifu_image.dart';
 import 'waifu_detailed_model.dart';
-import 'waifu_detailed_widget.dart';
+import 'waifu_detailed_screen.dart';
 
 abstract class IWaifuDetailedWidgetModel extends IWidgetModel {
   WaifuImage? get image;
@@ -20,7 +20,7 @@ WaifuDetailedWidgetModel defaultWaifuDetailedWidgetModelFactory(
 }
 
 class WaifuDetailedWidgetModel
-    extends WidgetModel<WaifuDetailedWidget, WaifuDetailedModel>
+    extends WidgetModel<WaifuDetailedScreen, WaifuDetailedModel>
     implements IWaifuDetailedWidgetModel {
   WaifuDetailedWidgetModel(WaifuDetailedModel model) : super(model);
 

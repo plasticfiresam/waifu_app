@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:elementary/elementary.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:waifu/main.dart';
@@ -10,7 +11,8 @@ import 'random_waifu_model.dart';
 import 'random_waifu_screen.dart';
 
 abstract class IRandomWaifuWidgetModel extends IWidgetModel {
-  ListenableState<EntityState<WaifuImage>> get image;
+  ValueListenable<WaifuImage?> get image;
+  ListenableState<EntityState<WaifuImage>> get imageState;
 
   void onRefresh();
   void onCopyLink();
@@ -40,7 +42,10 @@ class RandomWaifuWidgetModel
   ) : super(model);
 
   @override
-  ListenableState<EntityState<WaifuImage>> get image => _currentImage;
+  ValueListenable<WaifuImage?> get image => model.image;
+
+  @override
+  ListenableState<EntityState<WaifuImage>> get imageState => _currentImage;
 
   @override
   void initWidgetModel() {
@@ -50,13 +55,16 @@ class RandomWaifuWidgetModel
   }
 
   Future<void> _fetchRandowWaifu() async {
-    try {
-      _currentImage.loading(_currentImage.value?.data);
+    _currentImage.loading(_currentImage.value?.data);
 
-      final res = await model.loadRandomWaifu();
-      _currentImage.content(res);
-    } on DioError catch (e) {
-      _currentImage.error(e, _currentImage.value?.data);
+    await model.loadRandomWaifu();
+    _currentImage.content(image.value!);
+  }
+
+  @override
+  void onErrorHandle(Object error) {
+    if (error is DioError) {
+      _currentImage.error(error, _currentImage.value?.data);
     }
   }
 
@@ -68,7 +76,7 @@ class RandomWaifuWidgetModel
   @override
   Future<void> onCopyLink() async {
     if (image.value != null) {
-      Clipboard.setData(ClipboardData(text: image.value!.data!.url)).then(
+      Clipboard.setData(ClipboardData(text: image.value!.url)).then(
         (_) => _contextHelper.getScaffoldMessenger(context)
           ..clearSnackBars()
           ..showSnackBar(

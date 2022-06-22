@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:waifu/ui/random_waifu/widgets/waifu_viewer.dart';
 import 'waifu_detailed_wm.dart';
 
-class WaifuDetailedWidget extends ElementaryWidget<IWaifuDetailedWidgetModel> {
-  const WaifuDetailedWidget({
+class WaifuDetailedScreen extends ElementaryWidget<IWaifuDetailedWidgetModel> {
+  const WaifuDetailedScreen({
     Key? key,
     WidgetModelFactory wmFactory = defaultWaifuDetailedWidgetModelFactory,
   }) : super(wmFactory, key: key);
