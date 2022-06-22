@@ -5,7 +5,7 @@ typedef OnChangeCategory = Function(String);
 
 class WaifuCategoriesSelector extends StatelessWidget {
   final List<String> categories;
-  final String currentCategory;
+  final ValueNotifier<String> currentCategory;
   final VoidCallback onOpenSelector;
   final OnChangeCategory onChangeCategory;
   final ListenableState<EntityState<bool>> expandedState;
@@ -61,12 +61,17 @@ class WaifuCategoriesSelector extends StatelessWidget {
                             AnimatedOpacity(
                               opacity: isExpanded ? 0 : 1,
                               duration: const Duration(milliseconds: 300),
-                              child: Text(
-                                currentCategory,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                              child: ValueListenableBuilder<String>(
+                                valueListenable: currentCategory,
+                                builder: (context, data, _) {
+                                  return Text(
+                                    data,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  );
+                                },
                               ),
                             )
                           ],

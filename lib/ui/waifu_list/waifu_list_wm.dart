@@ -17,6 +17,36 @@ import 'package:waifu/ui/waifu_detailed/waifu_detailed_screen.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_model.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_screen.dart';
 
+abstract class IWaifuListWidgetModel extends IWidgetModel {
+  ListenableState<EntityState<WaifuImageList?>> get images;
+  Completer<void>? get refreshCompleter;
+
+  ValueNotifier<WaifuType> get type;
+  ValueNotifier<String> get category;
+
+  ScrollController get scrollController;
+  StickyHeaderController get stickyHeaderController;
+
+  ListenableState<EntityState<bool>> get categoriesExpanded;
+
+  void onChangeType(WaifuType type);
+  void onChangeCategory(String category);
+  void onToggleCategoriesPanel();
+  void onOpenRandom();
+  void openDetails(WaifuImage waifu);
+
+  void refreshList() {}
+}
+
+WaifuListWidgetModel createWaifuListWM(BuildContext _) => WaifuListWidgetModel(
+      WaifuListModel(
+        getIt.get<AppModel>(),
+        getIt.get<WaifuService>(),
+      ),
+      getIt.get<NavigationHelper>(),
+      ContextHelper(),
+    );
+
 class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
     implements IWaifuListWidgetModel {
   final EntityStateNotifier<WaifuImageList?> _images = EntityStateNotifier();
@@ -47,10 +77,10 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
   ListenableState<EntityState<WaifuImageList?>> get images => _images;
 
   @override
-  WaifuType get type => model.type.value;
+  ValueNotifier<WaifuType> get type => model.type;
 
   @override
-  String get category => model.category.value;
+  ValueNotifier<String> get category => model.category;
 
   double get topSafeArea =>
       _contextHelper.getMediaQuery(context).padding.top + 16;
@@ -136,33 +166,3 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
     );
   }
 }
-
-abstract class IWaifuListWidgetModel extends IWidgetModel {
-  ListenableState<EntityState<WaifuImageList?>> get images;
-  Completer<void>? get refreshCompleter;
-
-  WaifuType get type;
-  String get category;
-
-  ScrollController get scrollController;
-  StickyHeaderController get stickyHeaderController;
-
-  ListenableState<EntityState<bool>> get categoriesExpanded;
-
-  void onChangeType(WaifuType type);
-  void onChangeCategory(String category);
-  void onToggleCategoriesPanel();
-  void onOpenRandom();
-  void openDetails(WaifuImage waifu);
-
-  void refreshList() {}
-}
-
-WaifuListWidgetModel createWaifuListWM(BuildContext _) => WaifuListWidgetModel(
-      WaifuListModel(
-        getIt.get<AppModel>(),
-        getIt.get<WaifuService>(),
-      ),
-      getIt.get<NavigationHelper>(),
-      ContextHelper(),
-    );
