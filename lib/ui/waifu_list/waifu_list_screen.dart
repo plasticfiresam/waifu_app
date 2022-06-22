@@ -14,10 +14,6 @@ class WaifuListScreen extends ElementaryWidget<WaifuListWM> {
   @override
   Widget build(WaifuListWM wm) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.filter_alt_rounded),
-        onPressed: () {},
-      ),
       appBar: AppBar(
         title: const Text('Waifu list'),
       ),
