@@ -83,13 +83,18 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
   }
 
   Future<void> _fetchWaifuList({bool savePrevious = true}) async {
-    try {
-      _images.accept(EntityState(
-          data: savePrevious ? _images.value?.data : null, isLoading: true));
-      final images = await model.fetchWaifuImages();
-      _images.content(images);
-    } on DioError catch (e) {
-      _images.error(e);
+    _images.accept(EntityState(
+        data: savePrevious ? _images.value?.data : null, isLoading: true));
+
+    final images = await model.fetchWaifuImages();
+
+    _images.content(images);
+  }
+
+  @override
+  void onErrorHandle(Object error) {
+    if (error is DioError) {
+      _images.error(error, _images.value?.data);
     }
   }
 
