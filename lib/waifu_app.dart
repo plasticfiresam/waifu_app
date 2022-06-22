@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_screen.dart';
 
 class WaifuApp extends StatelessWidget {
@@ -17,6 +18,7 @@ class WaifuApp extends StatelessWidget {
           elevation: 0,
           foregroundColor: Colors.black,
         ),
+        textTheme: GoogleFonts.poppinsTextTheme(),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
