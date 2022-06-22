@@ -1,16 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:elementary/elementary.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:waifu/main.dart';
+import 'package:waifu/service/context_helper.dart';
 import 'package:waifu/service/model/waifu_image.dart';
 import 'package:waifu/service/waifu_service.dart';
 import 'random_waifu_model.dart';
-import 'random_waifu_widget.dart';
+import 'random_waifu_screen.dart';
 
 abstract class IRandomWaifuWidgetModel extends IWidgetModel {
   ListenableState<EntityState<WaifuImage>> get image;
 
   void onRefresh();
+  void onCopyLink();
 }
 
 RandomWaifuWidgetModel defaultRandomWaifuWidgetModelFactory(
@@ -19,18 +22,23 @@ RandomWaifuWidgetModel defaultRandomWaifuWidgetModelFactory(
     RandomWaifuModel(
       getIt.get<WaifuService>(),
     ),
+    ContextHelper(),
   );
 }
 
 // TODO: cover with documentation
 /// Default widget model for RandomWaifuWidget
 class RandomWaifuWidgetModel
-    extends WidgetModel<RandomWaifuWidget, RandomWaifuModel>
+    extends WidgetModel<RandomWaifuScreen, RandomWaifuModel>
     implements IRandomWaifuWidgetModel {
   final EntityStateNotifier<WaifuImage> _currentImage =
       EntityStateNotifier<WaifuImage>();
+  final ContextHelper _contextHelper;
 
-  RandomWaifuWidgetModel(RandomWaifuModel model) : super(model);
+  RandomWaifuWidgetModel(
+    RandomWaifuModel model,
+    this._contextHelper,
+  ) : super(model);
 
   @override
   ListenableState<EntityState<WaifuImage>> get image => _currentImage;
@@ -56,5 +64,18 @@ class RandomWaifuWidgetModel
   @override
   void onRefresh() {
     _fetchRandowWaifu();
+  }
+
+  @override
+  Future<void> onCopyLink() async {
+    if (image.value != null) {
+      Clipboard.setData(ClipboardData(text: image.value!.data!.url)).then(
+        (_) => _contextHelper.getScaffoldMessenger(context)
+          ..clearSnackBars()
+          ..showSnackBar(
+            const SnackBar(content: Text('Copied to clipboard')),
+          ),
+      );
+    }
   }
 }

@@ -7,8 +7,8 @@ import 'random_waifu_wm.dart';
 
 // TODO: cover with documentation
 /// Main widget for RandomWaifu module
-class RandomWaifuWidget extends ElementaryWidget<IRandomWaifuWidgetModel> {
-  const RandomWaifuWidget({
+class RandomWaifuScreen extends ElementaryWidget<IRandomWaifuWidgetModel> {
+  const RandomWaifuScreen({
     Key? key,
     WidgetModelFactory wmFactory = defaultRandomWaifuWidgetModelFactory,
   }) : super(wmFactory, key: key);
@@ -18,6 +18,12 @@ class RandomWaifuWidget extends ElementaryWidget<IRandomWaifuWidgetModel> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Random waifu'),
+        actions: [
+          IconButton(
+            onPressed: wm.onCopyLink,
+            icon: const Icon(Icons.copy_rounded),
+          ),
+        ],
       ),
       floatingActionButton: EntityStateNotifierBuilder<WaifuImage>(
         listenableEntityState: wm.image,

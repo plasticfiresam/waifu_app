@@ -23,6 +23,11 @@ class WaifuApp extends StatelessWidget {
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
         ),
+        snackBarTheme: const SnackBarThemeData(
+          contentTextStyle: TextStyle(color: Colors.black),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.white,
+        ),
       ),
       home: const WaifuListScreen(),
     );

@@ -10,7 +10,7 @@ import 'package:waifu/service/model/waifu_image_list.dart';
 import 'package:waifu/service/model/waifu_type.dart';
 import 'package:waifu/service/navigation_helper.dart';
 import 'package:waifu/service/waifu_service.dart';
-import 'package:waifu/ui/random_waifu/random_waifu_widget.dart';
+import 'package:waifu/ui/random_waifu/random_waifu_screen.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_model.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_screen.dart';
 
@@ -97,7 +97,7 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
     _navigationHelper.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const RandomWaifuWidget(),
+        builder: (context) => const RandomWaifuScreen(),
       ),
     );
   }
