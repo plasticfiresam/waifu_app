@@ -5,15 +5,22 @@ import 'package:waifu/service/model/waifu_image_list.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_wm.dart';
 import 'package:waifu/ui/waifu_list/widgets/waifu_list.dart';
 
-class WaifuListScreen extends ElementaryWidget<WaifuListWM> {
+class WaifuListScreen extends ElementaryWidget<WaifuListWidgetModel> {
   const WaifuListScreen({
     Key? key,
     WidgetModelFactory wmFactory = createWaifuListWM,
   }) : super(wmFactory, key: key);
 
   @override
-  Widget build(WaifuListWM wm) {
+  Widget build(WaifuListWidgetModel wm) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          wm.onOpenRandom();
+        },
+        label: const Text('I`m feeling lucky'),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(
         title: const Text('Waifu list'),
       ),

@@ -16,7 +16,7 @@ class WaifuService {
     return await _client.getWaifuImages(type: type, category: category);
   }
 
-  Future<WaifuImage> getRandomWaifuImages(
+  Future<WaifuImage> getRandomWaifuImage(
     WaifuType type,
     String category,
   ) async {

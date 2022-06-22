@@ -2,17 +2,20 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:elementary/elementary.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:waifu/main.dart';
 import 'package:waifu/service/context_helper.dart';
 import 'package:waifu/service/model/waifu_image_list.dart';
 import 'package:waifu/service/model/waifu_type.dart';
+import 'package:waifu/service/navigation_helper.dart';
 import 'package:waifu/service/waifu_service.dart';
+import 'package:waifu/ui/random_waifu/random_waifu_widget.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_model.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_screen.dart';
 
-class WaifuListWM extends WidgetModel<WaifuListScreen, WaifuListModel>
-    implements IWaifuListWM {
+class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
+    implements IWaifuListWidgetModel {
   final EntityStateNotifier<WaifuImageList?> _images = EntityStateNotifier();
 
   final EntityStateNotifier<bool> _categoriesExpanded =
@@ -21,7 +24,7 @@ class WaifuListWM extends WidgetModel<WaifuListScreen, WaifuListModel>
   ListenableState<EntityState<bool>> get categoriesExpanded =>
       _categoriesExpanded;
 
-  final ContextHelper _contextHelper;
+  final NavigationHelper _navigationHelper;
 
   Completer<void>? _refreshCompleter;
 
@@ -37,9 +40,9 @@ class WaifuListWM extends WidgetModel<WaifuListScreen, WaifuListModel>
   @override
   String get category => model.category.value;
 
-  WaifuListWM(
+  WaifuListWidgetModel(
     WaifuListModel model,
-    this._contextHelper,
+    this._navigationHelper,
   ) : super(model);
 
   @override
@@ -88,9 +91,19 @@ class WaifuListWM extends WidgetModel<WaifuListScreen, WaifuListModel>
       EntityState(data: !(_categoriesExpanded.value?.data ?? false)),
     );
   }
+
+  @override
+  void onOpenRandom() {
+    _navigationHelper.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const RandomWaifuWidget(),
+      ),
+    );
+  }
 }
 
-abstract class IWaifuListWM extends IWidgetModel {
+abstract class IWaifuListWidgetModel extends IWidgetModel {
   ListenableState<EntityState<WaifuImageList?>> get images;
   Completer<void>? get refreshCompleter;
 
@@ -100,11 +113,12 @@ abstract class IWaifuListWM extends IWidgetModel {
   void onChangeType(WaifuType type);
   void onChangeCategory(String category);
   void onToggleCategoriesPanel();
+  void onOpenRandom();
 }
 
-WaifuListWM createWaifuListWM(BuildContext _) => WaifuListWM(
+WaifuListWidgetModel createWaifuListWM(BuildContext _) => WaifuListWidgetModel(
       WaifuListModel(
-        WaifuService(),
+        getIt.get<WaifuService>(),
       ),
-      ContextHelper(),
+      getIt.get<NavigationHelper>(),
     );
