@@ -6,10 +6,11 @@ import 'package:waifu/ui/waifu_list/widgets/waifu_tile.dart';
 
 class WaifuList extends StatelessWidget {
   final WaifuImageList imageList;
-
+  final OnWaifuTapCallback? onTap;
   const WaifuList({
     Key? key,
     required this.imageList,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -23,6 +24,7 @@ class WaifuList extends StatelessWidget {
           children: [
             for (var image in imageList.images)
               WaifuTile(
+                onTap: onTap,
                 image: WaifuImage(image),
               ),
           ],

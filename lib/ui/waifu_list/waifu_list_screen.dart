@@ -72,6 +72,9 @@ class WaifuListScreen extends ElementaryWidget<WaifuListWidgetModel> {
                         }
                         return WaifuList(
                           imageList: value,
+                          onTap: (waifu) {
+                            wm.openDetails(waifu);
+                          },
                         );
                       },
                     ),

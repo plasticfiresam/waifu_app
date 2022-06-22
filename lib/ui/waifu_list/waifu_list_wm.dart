@@ -4,13 +4,16 @@ import 'package:dio/dio.dart';
 import 'package:elementary/elementary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:waifu/app_model.dart';
 import 'package:waifu/main.dart';
 import 'package:waifu/service/context_helper.dart';
+import 'package:waifu/service/model/waifu_image.dart';
 import 'package:waifu/service/model/waifu_image_list.dart';
 import 'package:waifu/service/model/waifu_type.dart';
 import 'package:waifu/service/navigation_helper.dart';
 import 'package:waifu/service/waifu_service.dart';
 import 'package:waifu/ui/random_waifu/random_waifu_screen.dart';
+import 'package:waifu/ui/waifu_detailed/waifu_detailed_widget.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_model.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_screen.dart';
 
@@ -112,6 +115,18 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
       ),
     );
   }
+
+  @override
+  void openDetails(WaifuImage waifu) {
+    model.selectWaifu(waifu);
+
+    _navigationHelper.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const WaifuDetailedWidget(),
+      ),
+    );
+  }
 }
 
 abstract class IWaifuListWidgetModel extends IWidgetModel {
@@ -125,10 +140,12 @@ abstract class IWaifuListWidgetModel extends IWidgetModel {
   void onChangeCategory(String category);
   void onToggleCategoriesPanel();
   void onOpenRandom();
+  void openDetails(WaifuImage waifu);
 }
 
 WaifuListWidgetModel createWaifuListWM(BuildContext _) => WaifuListWidgetModel(
       WaifuListModel(
+        getIt.get<AppModel>(),
         getIt.get<WaifuService>(),
       ),
       getIt.get<NavigationHelper>(),
