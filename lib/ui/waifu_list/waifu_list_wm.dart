@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:elementary/elementary.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:waifu/main.dart';
 import 'package:waifu/service/context_helper.dart';
 import 'package:waifu/service/model/waifu_image_list.dart';
@@ -24,8 +24,15 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
   ListenableState<EntityState<bool>> get categoriesExpanded =>
       _categoriesExpanded;
 
-  final NavigationHelper _navigationHelper;
+  final ScrollController _scrollController = ScrollController();
+  ScrollController get scrollController => _scrollController;
 
+  final StickyHeaderController _stickyHeaderController =
+      StickyHeaderController();
+  StickyHeaderController get stickyHeaderController => _stickyHeaderController;
+
+  final NavigationHelper _navigationHelper;
+  final ContextHelper _contextHelper;
   Completer<void>? _refreshCompleter;
 
   @override
@@ -40,9 +47,13 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
   @override
   String get category => model.category.value;
 
+  double get topSafeArea =>
+      _contextHelper.getMediaQuery(context).padding.top + 16;
+
   WaifuListWidgetModel(
     WaifuListModel model,
     this._navigationHelper,
+    this._contextHelper,
   ) : super(model);
 
   @override
@@ -121,4 +132,5 @@ WaifuListWidgetModel createWaifuListWM(BuildContext _) => WaifuListWidgetModel(
         getIt.get<WaifuService>(),
       ),
       getIt.get<NavigationHelper>(),
+      ContextHelper(),
     );

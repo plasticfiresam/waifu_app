@@ -18,7 +18,7 @@ class WaifuApp extends StatelessWidget {
           elevation: 0,
           foregroundColor: Colors.black,
         ),
-        textTheme: GoogleFonts.poppinsTextTheme(),
+        textTheme: GoogleFonts.interTextTheme(),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
