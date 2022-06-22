@@ -16,10 +16,8 @@ class WaifuDetailedWidget extends ElementaryWidget<IWaifuDetailedWidgetModel> {
         title: const Text('Waifu'),
       ),
       body: wm.image != null
-          ? WaifuViewer(
-              image: wm.image!,
-            )
-          : const Icon(Icons.error),
+          ? WaifuViewer(image: wm.image!)
+          : const Center(child: Icon(Icons.error)),
     );
   }
 }

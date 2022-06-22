@@ -7,8 +7,4 @@ class WaifuDetailedModel extends ElementaryModel {
   WaifuImage? get image => _appModel.currentImage;
 
   WaifuDetailedModel(this._appModel) : super();
-
-  selectWaifu(WaifuImage waifu) {
-    _appModel.currentImage = waifu;
-  }
 }
