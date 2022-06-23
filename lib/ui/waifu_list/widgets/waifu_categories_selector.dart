@@ -6,14 +6,14 @@ typedef OnChangeCategory = Function(String);
 class WaifuCategoriesSelector extends StatelessWidget {
   final List<String> categories;
   final ValueNotifier<String> currentCategory;
-  final VoidCallback onOpenSelector;
+  final VoidCallback toggleSelectorPanel;
   final OnChangeCategory onChangeCategory;
   final ListenableState<EntityState<bool>> expandedState;
   const WaifuCategoriesSelector({
     Key? key,
     required this.categories,
     required this.currentCategory,
-    required this.onOpenSelector,
+    required this.toggleSelectorPanel,
     required this.onChangeCategory,
     required this.expandedState,
   }) : super(key: key);
@@ -37,7 +37,7 @@ class WaifuCategoriesSelector extends StatelessWidget {
                 elevation: 0,
                 expansionCallback: (panelIndex, bool isExpanded) {
                   if (panelIndex == 0) {
-                    onOpenSelector();
+                    toggleSelectorPanel();
                   }
                 },
                 children: [

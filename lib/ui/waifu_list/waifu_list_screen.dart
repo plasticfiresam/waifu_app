@@ -23,28 +23,24 @@ class WaifuListScreen extends ElementaryWidget<WaifuListWidgetModel> {
         },
         label: const Text('I`m feeling lucky'),
       ),
+      appBar: AppBar(
+        title: const Text('Waifu list'),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: RefreshIndicator(
-        onRefresh: () async {
-          wm.refreshList();
-          return wm.refreshCompleter?.future ?? Future.value();
-        },
-        child: Scrollbar(
-          child: CustomScrollView(
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              const SliverAppBar(
-                pinned: true,
-                title: Text('Waifu list'),
-                primary: true,
-              ),
-              SliverStickyHeader(
-                overlapsContent: false,
-                header: WaifuCategoriesSelector(
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                WaifuCategoriesSelector(
                   expandedState: wm.categoriesExpanded,
                   currentCategory: wm.category,
                   categories: waifuCategories[WaifuType.sfw]!,
-                  onOpenSelector: () {
+                  toggleSelectorPanel: () {
                     wm.onToggleCategoriesPanel();
                   },
                   onChangeCategory: (String category) {
@@ -52,9 +48,20 @@ class WaifuListScreen extends ElementaryWidget<WaifuListWidgetModel> {
                     wm.onToggleCategoriesPanel();
                   },
                 ),
-                sliver: SliverPadding(
-                  padding: const EdgeInsets.all(16),
-                  sliver: SliverToBoxAdapter(
+              ],
+            ),
+          ),
+          Column(
+            children: [
+              const SizedBox(height: 64),
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    wm.refreshList();
+                    return wm.refreshCompleter?.future ?? Future.value();
+                  },
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(16),
                     child: EntityStateNotifierBuilder<List<WaifuImage>?>(
                       listenableEntityState: wm.images,
                       errorBuilder: (_, __, ___) {
@@ -84,7 +91,7 @@ class WaifuListScreen extends ElementaryWidget<WaifuListWidgetModel> {
               ),
             ],
           ),
-        ),
+        ].reversed.toList(),
       ),
     );
   }
