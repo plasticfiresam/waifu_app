@@ -90,26 +90,6 @@ void main() {
     );
 
     testWidgetModel<WaifuListWidgetModel, WaifuListScreen>(
-      'ScrollController initialized',
-      setupWm,
-      (wm, tester, context) {
-        tester.init();
-
-        expect(wm.scrollController, isNotNull);
-      },
-    );
-
-    testWidgetModel<WaifuListWidgetModel, WaifuListScreen>(
-      'StickyHeaderController initialized',
-      setupWm,
-      (wm, tester, context) {
-        tester.init();
-
-        expect(wm.stickyHeaderController, isNotNull);
-      },
-    );
-
-    testWidgetModel<WaifuListWidgetModel, WaifuListScreen>(
       'onToggleCategoriesPanel changes panel state',
       setupWm,
       (wm, tester, context) {

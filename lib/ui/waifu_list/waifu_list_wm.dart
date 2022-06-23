@@ -22,9 +22,6 @@ abstract class IWaifuListWidgetModel extends IWidgetModel {
   ValueNotifier<WaifuType> get type;
   ValueNotifier<String> get category;
 
-  ScrollController get scrollController;
-  StickyHeaderController get stickyHeaderController;
-
   ListenableState<EntityState<bool>> get categoriesExpanded;
 
   void onChangeType(WaifuType type);
@@ -45,22 +42,14 @@ WaifuListWidgetModel createWaifuListWM(BuildContext _) => WaifuListWidgetModel(
 
 class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
     implements IWaifuListWidgetModel {
-  final EntityStateNotifier<List<WaifuImage>?> _images = EntityStateNotifier();
+  final EntityStateNotifier<List<WaifuImage>> _images =
+      EntityStateNotifier.value([]);
 
   final EntityStateNotifier<bool> _categoriesExpanded =
       EntityStateNotifier.value(false);
   @override
   ListenableState<EntityState<bool>> get categoriesExpanded =>
       _categoriesExpanded;
-
-  final ScrollController _scrollController = ScrollController();
-  @override
-  ScrollController get scrollController => _scrollController;
-
-  final StickyHeaderController _stickyHeaderController =
-      StickyHeaderController();
-  @override
-  StickyHeaderController get stickyHeaderController => _stickyHeaderController;
 
   final NavigationHelper _navigationHelper;
 

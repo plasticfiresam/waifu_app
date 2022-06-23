@@ -31,7 +31,6 @@ class WaifuListScreen extends ElementaryWidget<WaifuListWidgetModel> {
         },
         child: Scrollbar(
           child: CustomScrollView(
-            controller: wm.scrollController,
             physics: const BouncingScrollPhysics(),
             slivers: [
               const SliverAppBar(
@@ -40,7 +39,6 @@ class WaifuListScreen extends ElementaryWidget<WaifuListWidgetModel> {
                 primary: true,
               ),
               SliverStickyHeader(
-                controller: wm.stickyHeaderController,
                 overlapsContent: false,
                 header: WaifuCategoriesSelector(
                   expandedState: wm.categoriesExpanded,
@@ -69,6 +67,9 @@ class WaifuListScreen extends ElementaryWidget<WaifuListWidgetModel> {
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
+                        }
+                        if (value.isEmpty) {
+                          return const Center(child: Text('Список вайфу пуст'));
                         }
                         return WaifuList(
                           imageList: value,
