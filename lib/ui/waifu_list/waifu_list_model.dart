@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:waifu/app_model.dart';
 import 'package:waifu/service/constants/waifu_categories.dart';
 import 'package:waifu/service/model/waifu_image.dart';
-import 'package:waifu/service/model/waifu_image_list.dart';
 import 'package:waifu/service/model/waifu_type.dart';
 import 'package:waifu/service/waifu_service.dart';
 

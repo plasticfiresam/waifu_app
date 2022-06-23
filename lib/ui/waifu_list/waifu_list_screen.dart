@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:waifu/service/constants/waifu_categories.dart';
 import 'package:waifu/service/model/waifu_image.dart';
-import 'package:waifu/service/model/waifu_image_list.dart';
 import 'package:waifu/service/model/waifu_type.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_wm.dart';
 import 'package:waifu/ui/waifu_list/widgets/waifu_categories_selector.dart';

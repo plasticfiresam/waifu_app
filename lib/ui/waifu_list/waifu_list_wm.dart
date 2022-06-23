@@ -8,7 +8,6 @@ import 'package:waifu/app_model.dart';
 import 'package:waifu/main.dart';
 import 'package:waifu/service/context_helper.dart';
 import 'package:waifu/service/model/waifu_image.dart';
-import 'package:waifu/service/model/waifu_image_list.dart';
 import 'package:waifu/service/model/waifu_type.dart';
 import 'package:waifu/service/navigation_helper.dart';
 import 'package:waifu/service/waifu_service.dart';
@@ -34,8 +33,7 @@ abstract class IWaifuListWidgetModel extends IWidgetModel {
   void onToggleCategoriesPanel();
   void onOpenRandom();
   void openDetails(WaifuImage waifu);
-
-  void refreshList() {}
+  void refreshList();
 }
 
 WaifuListWidgetModel createWaifuListWM(BuildContext _) => WaifuListWidgetModel(
@@ -44,7 +42,6 @@ WaifuListWidgetModel createWaifuListWM(BuildContext _) => WaifuListWidgetModel(
         getIt.get<WaifuService>(),
       ),
       getIt.get<NavigationHelper>(),
-      ContextHelper(),
     );
 
 class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
@@ -67,52 +64,45 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
   StickyHeaderController get stickyHeaderController => _stickyHeaderController;
 
   final NavigationHelper _navigationHelper;
-  final ContextHelper _contextHelper;
-  Completer<void>? _refreshCompleter;
 
+  Completer<void>? _refreshCompleter;
   @override
   Completer<void>? get refreshCompleter => _refreshCompleter;
 
   @override
   ListenableState<EntityState<List<WaifuImage>?>> get images => _images;
-
   @override
   ValueNotifier<WaifuType> get type => model.type;
-
   @override
   ValueNotifier<String> get category => model.category;
-
-  double get topSafeArea =>
-      _contextHelper.getMediaQuery(context).padding.top + 16;
 
   WaifuListWidgetModel(
     WaifuListModel model,
     this._navigationHelper,
-    this._contextHelper,
   ) : super(model);
 
   @override
   void initWidgetModel() {
     super.initWidgetModel();
 
-    _fetchWaifuList();
+    fetchWaifuList();
   }
 
   @override
   void onChangeCategory(String newCategory) {
     model.onChangeCategory(newCategory);
 
-    _fetchWaifuList(savePrevious: false);
+    fetchWaifuList(savePrevious: false);
   }
 
   @override
   void onChangeType(WaifuType newType) {
     model.onChangeType(newType);
 
-    _fetchWaifuList();
+    fetchWaifuList();
   }
 
-  Future<void> _fetchWaifuList({bool savePrevious = true}) async {
+  Future<void> fetchWaifuList({bool savePrevious = true}) async {
     _images.accept(EntityState(
       data: savePrevious ? _images.value?.data : null,
       isLoading: true,
@@ -135,7 +125,7 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
     if (_refreshCompleter?.isCompleted ?? true) {
       _refreshCompleter = Completer<void>();
     }
-    await _fetchWaifuList();
+    await fetchWaifuList();
     _refreshCompleter?.complete();
   }
 

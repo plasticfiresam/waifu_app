@@ -89,7 +89,7 @@ class WaifuCategoriesSelector extends StatelessWidget {
                           for (String category in categories)
                             FilterChip(
                               label: Text(category),
-                              selected: currentCategory == category,
+                              selected: currentCategory.value == category,
                               onSelected: (bool value) {
                                 if (value) {
                                   onChangeCategory(category);
