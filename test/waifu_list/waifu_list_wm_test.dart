@@ -137,4 +137,4 @@ class WaifuListModelMock extends Mock implements WaifuListModel {}
 
 class WaifuServiceMock extends Mock implements WaifuService {}
 
-const _mockWaifu = WaifuImage('https://i.waifu.pics/G8JK8lu.png');
+const _mockWaifu = AssetImage('assets/images/placeholder.jpeg');

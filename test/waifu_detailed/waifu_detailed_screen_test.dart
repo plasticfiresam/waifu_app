@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:waifu/service/model/waifu_image.dart';
@@ -13,15 +14,19 @@ void main() {
     await multiScreenGolden(tester, 'detailed_waifu_screen');
   });
 
-  testGoldens('Random waifu screen golden test data', (tester) async {
-    when(() => detailedWaifuWm.image).thenAnswer((_) => _mockWaifu);
+  testGoldens(
+    'Random waifu screen golden test data',
+    (tester) async {
+      when(() => detailedWaifuWm.image).thenAnswer((_) => _mockWaifu);
 
-    await tester.pumpWidgetBuilder(detailedWaifuScreen.build(detailedWaifuWm));
-    await multiScreenGolden(tester, 'detailed_waifu_screen_data');
-  }, skip: true);
+      await tester
+          .pumpWidgetBuilder(detailedWaifuScreen.build(detailedWaifuWm));
+      await multiScreenGolden(tester, 'detailed_waifu_screen_data');
+    },
+  );
 }
 
 class WaifuDetailedWidgetModelMock extends Mock
     implements IWaifuDetailedWidgetModel {}
 
-const _mockWaifu = WaifuImage('https://i.waifu.pics/G8JK8lu.png');
+const _mockWaifu = AssetImage('assets/images/placeholder.jpeg');

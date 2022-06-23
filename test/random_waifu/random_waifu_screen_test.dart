@@ -36,7 +36,6 @@ void main() {
       await tester.pumpWidgetBuilder(randomWaifuScreen.build(randomWaifuWm));
       await multiScreenGolden(tester, 'random_waifu_screen_data');
     },
-    skip: true,
   );
 
   /// not working
@@ -49,11 +48,10 @@ void main() {
       await tester.pumpWidgetBuilder(randomWaifuScreen.build(randomWaifuWm));
       await multiScreenGolden(tester, 'random_waifu_screen_error');
     },
-    skip: true,
   );
 }
 
 class RandomWaifuWidgetModelMock extends Mock
     implements IRandomWaifuWidgetModel {}
 
-const _mockWaifu = WaifuImage('https://i.waifu.pics/G8JK8lu.png');
+const _mockWaifu = AssetImage('assets/images/placeholder.jpeg');

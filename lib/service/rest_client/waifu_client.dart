@@ -20,7 +20,7 @@ abstract class WaifuClient {
   });
 
   @GET('/{type}/{category}')
-  Future<WaifuImage> getRandomWaifuImage({
+  Future<WaifuImageJson> getRandomWaifuImage({
     @Path() required WaifuType type,
     @Path() required String category,
   });

@@ -62,7 +62,7 @@ class WaifuListScreen extends ElementaryWidget<WaifuListWidgetModel> {
                   },
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(16),
-                    child: EntityStateNotifierBuilder<List<WaifuImage>?>(
+                    child: EntityStateNotifierBuilder<List<ImageProvider>?>(
                       listenableEntityState: wm.images,
                       errorBuilder: (_, __, ___) {
                         return const Center(
@@ -80,8 +80,8 @@ class WaifuListScreen extends ElementaryWidget<WaifuListWidgetModel> {
                         }
                         return WaifuList(
                           imageList: value,
-                          onTap: (waifu) {
-                            wm.openDetails(waifu);
+                          onTap: (image) {
+                            wm.openDetails(image);
                           },
                         );
                       },

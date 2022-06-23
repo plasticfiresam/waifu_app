@@ -23,7 +23,19 @@ void main() {
     await multiScreenGolden(tester, 'waifu_list_screen');
   });
 
-  // TODO goldens for another states
+  testGoldens('Waifu list screen golden test empty', (tester) async {
+    when(() => waifuListWm.images)
+        .thenAnswer((_) => EntityStateNotifier.value(getWaifuList()));
+
+    await tester.pumpWidgetBuilder(waifuListScreen.build(waifuListWm));
+    await multiScreenGolden(tester, 'waifu_list_screen');
+  });
 }
 
 class WaifuListWidgetModelMock extends Mock implements IWaifuListWidgetModel {}
+
+const _mockWaifu = AssetImage('assets/images/placeholder.jpeg');
+
+getWaifuList() {
+  return List.generate(5, (index) => _mockWaifu);
+}

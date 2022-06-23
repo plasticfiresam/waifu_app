@@ -1,5 +1,6 @@
 import 'package:elementary/elementary.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:waifu/app_model.dart';
 import 'package:waifu/service/constants/waifu_categories.dart';
 import 'package:waifu/service/model/waifu_image.dart';
@@ -7,8 +8,8 @@ import 'package:waifu/service/model/waifu_type.dart';
 import 'package:waifu/service/waifu_service.dart';
 
 class WaifuListModel extends ElementaryModel {
-  final ValueNotifier<List<WaifuImage>> images =
-      ValueNotifier<List<WaifuImage>>([]);
+  final ValueNotifier<List<WaifuImageJson>> images =
+      ValueNotifier<List<WaifuImageJson>>([]);
 
   final ValueNotifier<WaifuType> type = ValueNotifier<WaifuType>(WaifuType.sfw);
 
@@ -28,7 +29,7 @@ class WaifuListModel extends ElementaryModel {
     category.value = newCategory;
   }
 
-  void selectWaifu(WaifuImage waifu) {
+  void selectWaifu(ImageProvider waifu) {
     _appModel.currentImage = waifu;
   }
 
@@ -37,7 +38,7 @@ class WaifuListModel extends ElementaryModel {
       final imageList =
           await _waifuService.getWaifuImages(type.value, category.value);
 
-      images.value = List.from(imageList.images.map((e) => WaifuImage(e)));
+      images.value = List.from(imageList.images.map((e) => WaifuImageJson(e)));
     } catch (e) {
       handleError(e);
     }

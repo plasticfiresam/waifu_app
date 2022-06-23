@@ -1,7 +1,6 @@
 import 'package:elementary/elementary.dart';
 import 'package:flutter/material.dart';
-import 'package:waifu/service/model/waifu_image.dart';
-import 'package:waifu/ui/random_waifu/widgets/waifu_viewer.dart';
+import 'package:waifu/ui/widgets/waifu_viewer.dart';
 import 'random_waifu_wm.dart';
 
 class RandomWaifuScreen extends ElementaryWidget<IRandomWaifuWidgetModel> {
@@ -22,7 +21,7 @@ class RandomWaifuScreen extends ElementaryWidget<IRandomWaifuWidgetModel> {
           ),
         ],
       ),
-      floatingActionButton: EntityStateNotifierBuilder<WaifuImage>(
+      floatingActionButton: EntityStateNotifierBuilder<ImageProvider>(
         listenableEntityState: wm.imageState,
         builder: (_, data) {
           final loaded = data != null;
@@ -32,7 +31,7 @@ class RandomWaifuScreen extends ElementaryWidget<IRandomWaifuWidgetModel> {
           );
         },
       ),
-      body: EntityStateNotifierBuilder<WaifuImage>(
+      body: EntityStateNotifierBuilder<ImageProvider>(
         listenableEntityState: wm.imageState,
         loadingBuilder: (_, __) => const Center(
           child: CircularProgressIndicator(),

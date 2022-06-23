@@ -35,7 +35,7 @@ void main() {
       when(() => waifuServiceMock.getRandomWaifuImage(WaifuType.sfw, 'waifu'))
           .thenAnswer((_) => Future.value(mockImage));
 
-      when(() => modelData.image).thenReturn(ValueNotifier(mockImage));
+      when(() => modelData.image).thenReturn(ValueNotifier(_mockWaifu));
 
       when(() => modelData.loadRandomWaifu()).thenAnswer((_) => Future.value());
 
@@ -62,4 +62,5 @@ class RandomWaifuModelMock extends Mock implements RandomWaifuModel {}
 
 class WaifuServiceMock extends Mock implements WaifuService {}
 
-const mockImage = WaifuImage("https://i.waifu.pics/L~qlLcJ.jpg");
+const mockImage = WaifuImageJson("https://i.waifu.pics/L~qlLcJ.jpg");
+const _mockWaifu = AssetImage('assets/images/');

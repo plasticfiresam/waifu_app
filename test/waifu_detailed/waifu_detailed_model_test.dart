@@ -1,18 +1,16 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:waifu/app_model.dart';
-import 'package:waifu/service/model/waifu_image.dart';
 import 'package:waifu/ui/waifu_detailed/waifu_detailed_model.dart';
 
 void main() {
   late WaifuDetailedModel model;
   late WaifuDetailedModel modelFilled;
-  final waifuMock = MockWaifuImage();
   group('WaifuDetailedModel test', () {
     setUp(() {
       model = WaifuDetailedModel(AppModel());
 
-      modelFilled = WaifuDetailedModel(AppModel()..currentImage = waifuMock);
+      modelFilled = WaifuDetailedModel(AppModel()..currentImage = _mockWaifu);
     });
 
     test('init with nothing selected', () {
@@ -25,4 +23,4 @@ void main() {
   });
 }
 
-class MockWaifuImage extends Mock implements WaifuImage {}
+const _mockWaifu = AssetImage('assets/images/placeholder.jpeg');

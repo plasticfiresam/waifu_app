@@ -6,6 +6,7 @@ part of 'waifu_image.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-WaifuImage _$WaifuImageFromJson(Map<String, dynamic> json) => WaifuImage(
+WaifuImageJson _$WaifuImageFromJson(Map<String, dynamic> json) =>
+    WaifuImageJson(
       json['url'] as String,
     );

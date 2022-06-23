@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:elementary/elementary.dart';
-import 'package:flutter/foundation.dart';
-import 'package:waifu/service/model/waifu_image.dart';
+import 'package:flutter/widgets.dart';
 import 'package:waifu/service/model/waifu_type.dart';
 import 'package:waifu/service/waifu_service.dart';
 
@@ -9,7 +8,7 @@ String _defaultCategory = 'waifu';
 
 /// Default Elementary model for RandomWaifu module
 class RandomWaifuModel extends ElementaryModel {
-  ValueNotifier<WaifuImage?> image = ValueNotifier(null);
+  ValueNotifier<ImageProvider?> image = ValueNotifier(null);
   final WaifuService _waifuService;
 
   RandomWaifuModel(this._waifuService) : super();
@@ -21,7 +20,7 @@ class RandomWaifuModel extends ElementaryModel {
         _defaultCategory,
       );
 
-      image.value = randomImage;
+      image.value = NetworkImage(randomImage.url);
     } on DioError catch (e) {
       handleError(e);
     }

@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:waifu/service/model/waifu_image.dart';
@@ -15,15 +16,17 @@ void main() {
 
     test('loadRandomWaifu returns image', () async {
       when(() => waifuServiceMock.getRandomWaifuImage(WaifuType.sfw, 'waifu'))
-          .thenAnswer((_) => Future.value(mockImage));
+          .thenAnswer((_) => Future.value(_mockResponse));
 
       await model.loadRandomWaifu();
 
-      expect(model.image.value, mockImage);
+      expect(model.image.value, _mockWaifu);
     });
   });
 }
 
-const mockImage = WaifuImage("https://i.waifu.pics/L~qlLcJ.jpg");
+const _mockResponse = WaifuImageJson('assets/images/placeholder.jpeg');
+
+const _mockWaifu = NetworkImage('assets/images/placeholder.jpeg');
 
 class WaifuServiceMock extends Mock implements WaifuService {}

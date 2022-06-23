@@ -11,8 +11,8 @@ import 'random_waifu_model.dart';
 import 'random_waifu_screen.dart';
 
 abstract class IRandomWaifuWidgetModel extends IWidgetModel {
-  ValueListenable<WaifuImage?> get image;
-  ListenableState<EntityState<WaifuImage>> get imageState;
+  ValueListenable<ImageProvider?> get image;
+  ListenableState<EntityState<ImageProvider>> get imageState;
 
   void onRefresh();
   void onCopyLink();
@@ -31,8 +31,8 @@ RandomWaifuWidgetModel defaultRandomWaifuWidgetModelFactory(
 class RandomWaifuWidgetModel
     extends WidgetModel<RandomWaifuScreen, RandomWaifuModel>
     implements IRandomWaifuWidgetModel {
-  final EntityStateNotifier<WaifuImage> _currentImage =
-      EntityStateNotifier<WaifuImage>();
+  final EntityStateNotifier<ImageProvider> _currentImage =
+      EntityStateNotifier<ImageProvider>();
 
   final ContextHelper _contextHelper;
 
@@ -42,10 +42,10 @@ class RandomWaifuWidgetModel
   ) : super(model);
 
   @override
-  ValueListenable<WaifuImage?> get image => model.image;
+  ValueListenable<ImageProvider?> get image => model.image;
 
   @override
-  ListenableState<EntityState<WaifuImage>> get imageState => _currentImage;
+  ListenableState<EntityState<ImageProvider>> get imageState => _currentImage;
 
   @override
   void initWidgetModel() {
@@ -75,8 +75,9 @@ class RandomWaifuWidgetModel
 
   @override
   Future<void> onCopyLink() async {
-    if (image.value != null) {
-      Clipboard.setData(ClipboardData(text: image.value!.url)).then(
+    if (image.value != null && image.value is NetworkImage) {
+      Clipboard.setData(ClipboardData(text: (image.value as NetworkImage).url))
+          .then(
         (_) => _contextHelper.getScaffoldMessenger(context)
           ..clearSnackBars()
           ..showSnackBar(

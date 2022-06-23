@@ -1,6 +1,6 @@
 import 'package:elementary/elementary.dart';
 import 'package:flutter/material.dart';
-import 'package:waifu/ui/random_waifu/widgets/waifu_viewer.dart';
+import 'package:waifu/ui/widgets/waifu_viewer.dart';
 import 'waifu_detailed_wm.dart';
 
 class WaifuDetailedScreen extends ElementaryWidget<IWaifuDetailedWidgetModel> {

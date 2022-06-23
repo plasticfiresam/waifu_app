@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:elementary/elementary.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ import 'package:waifu/ui/waifu_list/waifu_list_model.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_screen.dart';
 
 abstract class IWaifuListWidgetModel extends IWidgetModel {
-  ListenableState<EntityState<List<WaifuImage>?>> get images;
+  ListenableState<EntityState<List<ImageProvider>?>> get images;
   Completer<void>? get refreshCompleter;
 
   ValueNotifier<WaifuType> get type;
@@ -28,7 +29,7 @@ abstract class IWaifuListWidgetModel extends IWidgetModel {
   void onChangeCategory(String category);
   void onToggleCategoriesPanel();
   void onOpenRandom();
-  void openDetails(WaifuImage waifu);
+  void openDetails(ImageProvider waifu);
   void refreshList();
 }
 
@@ -42,7 +43,7 @@ WaifuListWidgetModel createWaifuListWM(BuildContext _) => WaifuListWidgetModel(
 
 class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
     implements IWaifuListWidgetModel {
-  final EntityStateNotifier<List<WaifuImage>> _images =
+  final EntityStateNotifier<List<ImageProvider>> _images =
       EntityStateNotifier.value([]);
 
   final EntityStateNotifier<bool> _categoriesExpanded =
@@ -58,7 +59,7 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
   Completer<void>? get refreshCompleter => _refreshCompleter;
 
   @override
-  ListenableState<EntityState<List<WaifuImage>?>> get images => _images;
+  ListenableState<EntityState<List<ImageProvider>?>> get images => _images;
   @override
   ValueNotifier<WaifuType> get type => model.type;
   @override
@@ -98,7 +99,8 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
 
     await model.fetchWaifuImages();
 
-    _images.content(model.images.value);
+    _images
+        .content(model.images.value.map((e) => NetworkImage(e.url)).toList());
   }
 
   @override
@@ -135,7 +137,7 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
   }
 
   @override
-  void openDetails(WaifuImage waifu) {
+  void openDetails(ImageProvider waifu) {
     model.selectWaifu(waifu);
 
     _navigationHelper.push(
