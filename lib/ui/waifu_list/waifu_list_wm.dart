@@ -15,6 +15,7 @@ import 'package:waifu/ui/random_waifu/random_waifu_screen.dart';
 import 'package:waifu/ui/waifu_detailed/waifu_detailed_screen.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_model.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_screen.dart';
+import 'package:waifu/ui/waifu_tinder/waifu_tinder_screen.dart';
 
 abstract class IWaifuListWidgetModel extends IWidgetModel {
   ListenableState<EntityState<List<ImageProvider>?>> get images;
@@ -31,6 +32,8 @@ abstract class IWaifuListWidgetModel extends IWidgetModel {
   void onOpenRandom();
   void openDetails(ImageProvider waifu);
   void refreshList();
+
+  void openTinder() {}
 }
 
 WaifuListWidgetModel createWaifuListWM(BuildContext _) => WaifuListWidgetModel(
@@ -99,8 +102,9 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
 
     await model.fetchWaifuImages();
 
-    _images
-        .content(model.images.value.map((e) => NetworkImage(e.url)).toList());
+    _images.content(model.images.value
+        .map((e) => CachedNetworkImageProvider(e.url))
+        .toList());
   }
 
   @override
@@ -144,6 +148,16 @@ class WaifuListWidgetModel extends WidgetModel<WaifuListScreen, WaifuListModel>
       context,
       MaterialPageRoute(
         builder: (context) => const WaifuDetailedScreen(),
+      ),
+    );
+  }
+
+  @override
+  void openTinder() {
+    _navigationHelper.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const WaifuTinderScreen(),
       ),
     );
   }

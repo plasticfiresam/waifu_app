@@ -1,5 +1,4 @@
 import 'package:elementary/elementary.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:waifu/app_model.dart';
 import 'package:waifu/service/constants/waifu_categories.dart';

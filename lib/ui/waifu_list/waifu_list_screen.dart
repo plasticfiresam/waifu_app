@@ -1,8 +1,6 @@
 import 'package:elementary/elementary.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:waifu/service/constants/waifu_categories.dart';
-import 'package:waifu/service/model/waifu_image.dart';
 import 'package:waifu/service/model/waifu_type.dart';
 import 'package:waifu/ui/waifu_list/waifu_list_wm.dart';
 import 'package:waifu/ui/waifu_list/widgets/waifu_categories_selector.dart';
@@ -25,6 +23,16 @@ class WaifuListScreen extends ElementaryWidget<WaifuListWidgetModel> {
       ),
       appBar: AppBar(
         title: const Text('Waifu list'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              wm.openTinder();
+            },
+            icon: const Icon(
+              Icons.card_giftcard,
+            ),
+          )
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Stack(
